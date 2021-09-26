@@ -1,14 +1,8 @@
 package jpabook.jpashop;
 
-import jpabook.jpashop.domain.Member;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-
-import java.util.List;
 
 import static javax.persistence.Persistence.createEntityManagerFactory;
 
@@ -23,15 +17,7 @@ public class JpaMain {
 
         try {
 
-            //Criteria 사용 준비
-            CriteriaBuilder cb = em.getCriteriaBuilder();
-            CriteriaQuery<Member> query = cb.createQuery(Member.class);
-
-            Root<Member> m = query.from(Member.class);
-
-            CriteriaQuery<Member> cq = query.select(m).where(cb.equal(m.get("username"), "kim"));
-
-            List<Member> resultList = em.createQuery(cq)
+            em.createNativeQuery("select MEMBER_ID, city, street, zipcode, USERNAME from MEMEMBER")
                     .getResultList();
 
             tx.commit();
